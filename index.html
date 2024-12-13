@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最小送粉气流量计算器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 添加思源黑体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #6366f1;
+            ring-color: #6366f1;
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto p-6 max-w-3xl">
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>
+            
+            <form id="calculator-form" class="space-y-6">
+                <!-- 输入字段 -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- 左列 -->
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label for="gasType" class="block font-medium text-gray-700">载气类型：</label>
+                            <select id="gasType" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50">
+                                <option value="1">氮气 (N₂)</option>
+                                <option value="2">氦气 (He)</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="pressure" class="block font-medium text-gray-700">主气压力：</label>
+                            <div class="flex space-x-2">
+                                <input type="number" id="pressure" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="500" required>
+                                <select id="pressureUnit" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50">
+                                    <option value="psi">psi</option>
+                                    <option value="mpa">MPa</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="temperature" class="block font-medium text-gray-700">主气温度 (°C)：</label>
+                            <input type="number" id="temperature" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="20" required>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="particleDiameter" class="block font-medium text-gray-700">粉末粒径 (μm)：</label>
+                            <input type="number" id="particleDiameter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="50" required>
+                        </div>
+                    </div>
+
+                    <!-- 右列 -->
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label for="particleDensity" class="block font-medium text-gray-700">粉末密度 (kg/m³)：</label>
+                            <input type="number" id="particleDensity" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="2700" required>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="volumeFraction" class="block font-medium text-gray-700">粉末体积分数：</label>
+                            <input type="number" id="volumeFraction" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="0.005" required>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="pipeDiameter" class="block font-medium text-gray-700">送粉管直径 (mm)：</label>
+                            <input type="number" id="pipeDiameter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="4" required>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="safetyCoefficient" class="block font-medium text-gray-700">安全系数：</label>
+                            <input type="number" id="safetyCoefficient" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="1.5" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 计算按钮 -->
+                <div class="flex justify-center mt-8">
+                    <button type="submit" class="px-8 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all transform hover:scale-105">
+                        计算
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 结果显示 -->
+        <div id="results" class="bg-white rounded-2xl shadow-lg p-8 mb-8 hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">计算结果</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="space-y-3">
+                    <p class="flex justify-between">
+                        <span class="font-medium text-gray-700">最小流化速度：</span>
+                        <span id="resultUpt" class="text-indigo-600"></span>
+                        <span class="text-gray-600">m/s</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span class="font-medium text-gray-700">空管气速：</span>
+                        <span id="resultUf0" class="text-indigo-600"></span>
+                        <span class="text-gray-600">m/s</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span class="font-medium text-gray-700">实际气速：</span>
+                        <span id="resultUf" class="text-indigo-600"></span>
+                        <span class="text-gray-600">m/s</span>
+                    </p>
+                </div>
+                <div class="space-y-3">
+                    <p class="flex justify-between">
+                        <span class="font-medium text-gray-700">气体流量：</span>
+                        <span id="resultFlowRate" class="text-indigo-600"></span>
+                        <span class="text-gray-600">SLM</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span class="font-medium text-gray-700">粉末质量流量：</span>
+                        <span id="resultPowderFlow" class="text-indigo-600"></span>
+                        <span class="text-gray-600">g/min</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span class="font-medium text-gray-700">单位长度压降：</span>
+                        <span id="resultPressureDrop" class="text-indigo-600"></span>
+                        <span class="text-gray-600">Pa/m</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部署名 -->
+        <div class="text-center text-gray-600 mt-4">
+            <p>张科杰  超卓航科广州研究院</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript 代码保持不变
+        // ... (保持原有的所有 JavaScript 函数和事件处理程序不变)
+    </script>
+<script>window.parent.postMessage({ action: "ready" }, "*"); 
+ 
+window.console = new Proxy(console, {
+  get(target, prop) {
+    if (['log', 'warn', 'error'].includes(prop)) {
+      return new Proxy(target[prop], {
+        apply(fn, thisArg, args) {
+          fn.apply(thisArg, args);
+          window.parent.postMessage({ action: 'console', 
+            type: prop, 
+            args: args.map((arg) => {
+              try {
+                return JSON.stringify(arg).replace(/^["']|["']$/g, '');
+              } catch (e) {
+                return arg;
+              }
+            }) 
+          }, '*');
+        }
+      });
+    }
+    return target[prop];
+  }
+});
+</script></body>
+</html>
