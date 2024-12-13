@@ -11,6 +11,8 @@
     <style>
         body {
             font-family: 'Noto Sans SC', sans-serif;
+            margin: 0; /* 去掉默认边距 */
+            padding: 0; /* 去掉默认内边距 */
         }
         input:focus, select:focus {
             outline: none;
@@ -31,9 +33,9 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <div class="container mx-auto px-4 py-4 md:p-6 max-w-3xl">
-        <div class="bg-white rounded-xl md:rounded-2xl shadow-md md:shadow-lg p-4 md:p-8 mb-6">
+<body>
+    <div class="container mx-auto px-4 py-4 md:p-6 max-w-lg"> <!-- 调整最大宽度 -->
+        <div class="bg-white rounded-xl shadow-md p-4 md:p-8 mb-6"> <!-- 去掉阴影部分 -->
             <h1 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>
             
             <form id="calculator-form" class="grid form-grid gap-4 md:gap-6">
@@ -97,7 +99,7 @@
         </div>
 
         <!-- 结果显示 -->
-        <div id="results" class="bg-white rounded-xl md:rounded-2xl shadow-md md:shadow-lg p-4 md:p-8 mb-6 hidden">
+        <div id="results" class="bg-white rounded-xl shadow-md p-4 md:p-8 mb-6 hidden">
             <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-gray-800">计算结果</h2>
             <div class="space-y-3">
                 <p class="flex flex-wrap justify-between text-sm md:text-base">
