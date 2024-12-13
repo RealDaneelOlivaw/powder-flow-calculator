@@ -13,7 +13,7 @@
             font-family: 'Noto Sans SC', sans-serif;
         }
         * {
-            box-sizing: border-box; /* 防止边框和内边距导致溢出 */
+            box-sizing: border-box;
         }
         input:focus, select:focus {
             outline: none;
@@ -26,7 +26,7 @@
     </style>
 </head>
 <body>
-    <div id="container" class="mx-auto px-4 py-4 md:p-6" style="max-width: 100vw;"> <!-- 使用100vw确保适应屏幕 -->
+    <div id="container" class="mx-auto px-4 py-4 md:p-6" style="max-width: 100vw;">
         <div class="bg-white rounded-lg p-4 md:p-6 mb-6">
             <h1 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>
             
@@ -42,7 +42,7 @@
                 <div class="form-item">
                     <label for="pressure" class="block font-medium text-gray-700 text-sm md:text-base">主气压力：</label>
                     <div class="flex space-x-2">
-                        <input type="number" id="pressure" class="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" required>
+                        <input type="number" id="pressure" class="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" step="any" required>
                         <select id="pressureUnit" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
                             <option value="psi">psi</option>
                             <option value="mpa">MPa</option>
@@ -52,32 +52,32 @@
 
                 <div class="form-item">
                     <label for="temperature" class="block font-medium text-gray-700 text-sm md:text-base">主气温度 (°C)：</label>
-                    <input type="number" id="temperature" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" required>
+                    <input type="number" id="temperature" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" step="any">
                 </div>
 
                 <div class="form-item">
                     <label for="particleDiameter" class="block font-medium text-gray-700 text-sm md:text-base">粉末粒径 (μm)：</label>
-                    <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="25" required>
+                    <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="25" step="any">
                 </div>
 
                 <div class="form-item">
                     <label for="particleDensity" class="block font-medium text-gray-700 text-sm md:text-base">粉末密度 (kg/m³)：</label>
-                    <input type="number" id="particleDensity" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="2700" required>
+                    <input type="number" id="particleDensity" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="2700" step="any">
                 </div>
 
                 <div class="form-item">
                     <label for="volumeFraction" class="block font-medium text-gray-700 text-sm md:text-base">粉末体积分数（%）：</label>
-                    <input type="number" id="volumeFraction" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="0.5" required>
+                    <input type="number" id="volumeFraction" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="0.5" step="any">
                 </div>
 
                 <div class="form-item">
                     <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm md:text-base">送粉管直径 (mm)：</label>
-                    <input type="number" id="pipeDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="4" required>
+                    <input type="number" id="pipeDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="4" step="any">
                 </div>
 
                 <div class="form-item">
                     <label for="safetyCoefficient" class="block font-medium text-gray-700 text-sm md:text-base">安全系数：</label>
-                    <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.5" required>
+                    <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.5" step="any">
                 </div>
 
                 <!-- 计算按钮 -->
@@ -128,7 +128,7 @@
         function adjustContainerWidth() {
             const container = document.getElementById('container');
             const screenWidth = window.innerWidth;
-            container.style.width = `${screenWidth}px`; // 设置容器宽度为屏幕宽度
+            container.style.width = `${screenWidth}px`;
         }
 
         // 调整容器宽度
@@ -139,7 +139,7 @@
 
         // 监听表单提交事件
         document.getElementById('calculator-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // 阻止表单默认提交行为
+            e.preventDefault();
 
             // 获取输入值
             const gasType = parseInt(document.getElementById('gasType').value);
@@ -151,6 +151,16 @@
             let volumeFraction = parseFloat(document.getElementById('volumeFraction').value);
             const pipeDiameter = parseFloat(document.getElementById('pipeDiameter').value);
             const safetyCoefficient = parseFloat(document.getElementById('safetyCoefficient').value);
+
+            // 验证主气压力
+            if (pressure <= 0) {
+                alert("主气压力必须大于0。");
+                return;
+            }
+            if (pressureUnit === 'mpa' && pressure > 15) {
+                alert("当单位为MPa时，主气压力最大不得超过15 MPa。");
+                return;
+            }
 
             // 将粉末体积分数从百分数转换为小数
             volumeFraction = volumeFraction / 100;
