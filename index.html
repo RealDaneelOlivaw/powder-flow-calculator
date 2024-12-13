@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>最小送粉气流量计算器</title>
+    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 添加思源黑体 -->
+    <!-- 引入思源黑体字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -19,75 +20,80 @@
         .transition-all {
             transition: all 0.3s ease;
         }
+        /* 移动端输入框样式优化 */
+        @media (max-width: 768px) {
+            input[type="number"] {
+                font-size: 16px; /* 防止 iOS 自动缩放 */
+            }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <div class="container mx-auto p-6 max-w-3xl">
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>
+    <div class="container mx-auto px-4 py-4 md:p-6 max-w-3xl">
+        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-8 mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>
             
-            <form id="calculator-form" class="space-y-6">
-                <!-- 输入字段 -->
-                <div class="grid md:grid-cols-2 gap-6">
+            <form id="calculator-form" class="space-y-4 md:space-y-6">
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
                     <!-- 左列 -->
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <label for="gasType" class="block font-medium text-gray-700">载气类型：</label>
-                            <select id="gasType" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50">
+                    <div class="space-y-4">
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="gasType" class="block font-medium text-gray-700 text-sm md:text-base">载气类型：</label>
+                            <select id="gasType" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
                                 <option value="1">氮气 (N₂)</option>
                                 <option value="2">氦气 (He)</option>
                             </select>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="pressure" class="block font-medium text-gray-700">主气压力：</label>
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="pressure" class="block font-medium text-gray-700 text-sm md:text-base">主气压力：</label>
                             <div class="flex space-x-2">
-                                <input type="number" id="pressure" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="500" required>
-                                <select id="pressureUnit" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50">
+                                <input type="number" id="pressure" class="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" required>
+                                <select id="pressureUnit" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
                                     <option value="psi">psi</option>
                                     <option value="mpa">MPa</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="temperature" class="block font-medium text-gray-700">主气温度 (°C)：</label>
-                            <input type="number" id="temperature" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="20" required>
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="temperature" class="block font-medium text-gray-700 text-sm md:text-base">主气温度 (°C)：</label>
+                            <input type="number" id="temperature" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="20" required>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="particleDiameter" class="block font-medium text-gray-700">粉末粒径 (μm)：</label>
-                            <input type="number" id="particleDiameter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="50" required>
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="particleDiameter" class="block font-medium text-gray-700 text-sm md:text-base">粉末粒径 (μm)：</label>
+                            <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="50" required>
                         </div>
                     </div>
 
                     <!-- 右列 -->
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <label for="particleDensity" class="block font-medium text-gray-700">粉末密度 (kg/m³)：</label>
-                            <input type="number" id="particleDensity" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="2700" required>
+                    <div class="space-y-4">
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="particleDensity" class="block font-medium text-gray-700 text-sm md:text-base">粉末密度 (kg/m³)：</label>
+                            <input type="number" id="particleDensity" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="2700" required>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="volumeFraction" class="block font-medium text-gray-700">粉末体积分数：</label>
-                            <input type="number" id="volumeFraction" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="0.005" required>
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="volumeFraction" class="block font-medium text-gray-700 text-sm md:text-base">粉末体积分数（%）：</label>
+                            <input type="number" id="volumeFraction" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="0.5" required>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="pipeDiameter" class="block font-medium text-gray-700">送粉管直径 (mm)：</label>
-                            <input type="number" id="pipeDiameter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="4" required>
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm md:text-base">送粉管直径 (mm)：</label>
+                            <input type="number" id="pipeDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="4" required>
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="safetyCoefficient" class="block font-medium text-gray-700">安全系数：</label>
-                            <input type="number" id="safetyCoefficient" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all" value="1.5" required>
+                        <div class="space-y-1 md:space-y-2">
+                            <label for="safetyCoefficient" class="block font-medium text-gray-700 text-sm md:text-base">安全系数：</label>
+                            <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.5" required>
                         </div>
                     </div>
                 </div>
 
                 <!-- 计算按钮 -->
-                <div class="flex justify-center mt-8">
-                    <button type="submit" class="px-8 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all transform hover:scale-105">
+                <div class="flex justify-center mt-6">
+                    <button type="submit" class="w-full md:w-auto px-6 md:px-8 py-2.5 md:py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all transform hover:scale-105 text-sm md:text-base">
                         计算
                     </button>
                 </div>
@@ -95,79 +101,148 @@
         </div>
 
         <!-- 结果显示 -->
-        <div id="results" class="bg-white rounded-2xl shadow-lg p-8 mb-8 hidden">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">计算结果</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="space-y-3">
-                    <p class="flex justify-between">
-                        <span class="font-medium text-gray-700">最小流化速度：</span>
-                        <span id="resultUpt" class="text-indigo-600"></span>
-                        <span class="text-gray-600">m/s</span>
-                    </p>
-                    <p class="flex justify-between">
-                        <span class="font-medium text-gray-700">空管气速：</span>
-                        <span id="resultUf0" class="text-indigo-600"></span>
-                        <span class="text-gray-600">m/s</span>
-                    </p>
-                    <p class="flex justify-between">
-                        <span class="font-medium text-gray-700">实际气速：</span>
-                        <span id="resultUf" class="text-indigo-600"></span>
-                        <span class="text-gray-600">m/s</span>
-                    </p>
-                </div>
-                <div class="space-y-3">
-                    <p class="flex justify-between">
-                        <span class="font-medium text-gray-700">气体流量：</span>
+        <div id="results" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-8 mb-6 hidden">
+            <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-gray-800">计算结果</h2>
+            <div class="space-y-3">
+                <p class="flex flex-wrap justify-between text-sm md:text-base">
+                    <span class="font-medium text-gray-700">最小气体流量：</span>
+                    <span class="flex items-center space-x-1">
                         <span id="resultFlowRate" class="text-indigo-600"></span>
                         <span class="text-gray-600">SLM</span>
-                    </p>
-                    <p class="flex justify-between">
-                        <span class="font-medium text-gray-700">粉末质量流量：</span>
+                    </span>
+                </p>
+                <p class="flex flex-wrap justify-between text-sm md:text-base">
+                    <span class="font-medium text-gray-700">粉末质量流量：</span>
+                    <span class="flex items-center space-x-1">
                         <span id="resultPowderFlow" class="text-indigo-600"></span>
                         <span class="text-gray-600">g/min</span>
-                    </p>
-                    <p class="flex justify-between">
-                        <span class="font-medium text-gray-700">单位长度压降：</span>
+                    </span>
+                </p>
+                <p class="flex flex-wrap justify-between text-sm md:text-base">
+                    <span class="font-medium text-gray-700">单位长度压降：</span>
+                    <span class="flex items-center space-x-1">
                         <span id="resultPressureDrop" class="text-indigo-600"></span>
                         <span class="text-gray-600">Pa/m</span>
-                    </p>
-                </div>
+                    </span>
+                </p>
             </div>
         </div>
 
         <!-- 底部署名 -->
-        <div class="text-center text-gray-600 mt-4">
+        <div class="text-center text-gray-600 mt-4 text-sm md:text-base">
             <p>张科杰  超卓航科广州研究院</p>
         </div>
     </div>
 
     <script>
-        // JavaScript 代码保持不变
-        // ... (保持原有的所有 JavaScript 函数和事件处理程序不变)
+        // 监听表单提交事件
+        document.getElementById('calculator-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止表单默认提交行为
+
+            // 获取输入值
+            const gasType = parseInt(document.getElementById('gasType').value);
+            const pressure = parseFloat(document.getElementById('pressure').value);
+            const pressureUnit = document.getElementById('pressureUnit').value;
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const particleDiameter = parseFloat(document.getElementById('particleDiameter').value);
+            const particleDensity = parseFloat(document.getElementById('particleDensity').value);
+            let volumeFraction = parseFloat(document.getElementById('volumeFraction').value);
+            const pipeDiameter = parseFloat(document.getElementById('pipeDiameter').value);
+            const safetyCoefficient = parseFloat(document.getElementById('safetyCoefficient').value);
+
+            // 将粉末体积分数从百分数转换为小数
+            volumeFraction = volumeFraction / 100;
+
+            // 转换压力单位到 Pa
+            let pressurePa;
+            if (pressureUnit === 'psi') {
+                pressurePa = pressure * 6894.76; // psi 转 Pa
+            } else {
+                pressurePa = pressure * 1000000; // MPa 转 Pa
+            }
+
+            // 转换温度到 K
+            const temperatureK = temperature + 273.15;
+
+            // 标准状态参数
+            const standardPressure = 101325; // Pa
+            const standardTemperature = 273.15; // K
+
+            // 粉末粒径转换为米
+            const dp = particleDiameter * 1e-6; // m
+
+            // 计算气体在实际状态下的密度 rho
+            let rhoStandard, mu;
+            if (gasType === 1) {
+                rhoStandard = 1.25; // kg/m³ 氮气标准密度
+                mu = 1.8e-5; // Pa·s 氮气粘度
+            } else {
+                rhoStandard = 0.1664; // kg/m³ 氦气标准密度
+                mu = 1.96e-5; // Pa·s 氦气粘度
+            }
+            const rho = (pressurePa * standardTemperature) / (standardPressure * temperatureK) * rhoStandard; // 实际密度
+
+            // 计算动力粘度 nu
+            const nu = mu / rho; // m²/s
+
+            // 重力加速度
+            const g = 9.81; // m/s²
+
+            // 计算 U_pt
+            const Upt = (Math.pow(dp, 2) * (particleDensity - rho) * g) / (18 * rho * nu);
+
+            // 计算 U_f0
+            const exponent = 2.71;
+            const root = 1 / 3.71;
+            const Uf0 = Math.pow(100 * Upt * Math.pow(nu / dp, exponent), root);
+
+            // 计算 U_f
+            const term = Math.pow(Upt / Uf0, 1/3) * Math.pow(volumeFraction, 0.5);
+            const Uf = Uf0 * (1 + 2.8 * term);
+
+            // 迭代求解 U
+            let U = 0.6; // 初始猜测值
+            const Dd = pipeDiameter * 1e-3; // 管道直径 m
+            const tolerance = 1e-6;
+            const maxIterations = 100;
+            let iteration = 0;
+
+            while (iteration < maxIterations) {
+                const newU = Uf * (5 * Math.log10(Dd * U / nu) - 3.90);
+                if (Math.abs(newU - U) < tolerance) {
+                    U = newU;
+                    break;
+                }
+                U = newU;
+                iteration++;
+            }
+            if (iteration === maxIterations) {
+                alert("迭代未能收敛，请检查输入参数。");
+                return;
+            }
+
+            // 计算实际流量 Q 和标准流量 Q_s
+            const pipeArea = Math.PI * Math.pow(Dd / 2, 2); // 管道截面积 m²
+            const Q = U * pipeArea; // 实际流量 m³/s
+            const Qs = Q * (pressurePa / standardPressure) * (standardTemperature / temperatureK); // 标准流量 m³/s
+
+            // 转换为 SLM，并乘以安全系数
+            const Qs_slm = Qs * 1000 * 60 * safetyCoefficient; // SLM
+
+            // 计算粉末质量流量
+            const powderFlow = Q * volumeFraction * particleDensity * 1000 * 60; // g/min
+
+            // 计算单位长度压降
+            const pressureDrop = (volumeFraction * particleDensity + (1 - volumeFraction) * rho) * (4 * Math.pow(Uf, 2) / Dd); // Pa/m
+
+            // 显示结果
+            document.getElementById('resultFlowRate').textContent = Qs_slm.toFixed(2);
+            document.getElementById('resultPowderFlow').textContent = powderFlow.toFixed(2);
+            document.getElementById('resultPressureDrop').textContent = pressureDrop.toFixed(2);
+
+            // 显示结果区域
+            document.getElementById('results').classList.remove('hidden');
+        });
     </script>
-<script>window.parent.postMessage({ action: "ready" }, "*"); 
- 
-window.console = new Proxy(console, {
-  get(target, prop) {
-    if (['log', 'warn', 'error'].includes(prop)) {
-      return new Proxy(target[prop], {
-        apply(fn, thisArg, args) {
-          fn.apply(thisArg, args);
-          window.parent.postMessage({ action: 'console', 
-            type: prop, 
-            args: args.map((arg) => {
-              try {
-                return JSON.stringify(arg).replace(/^["']|["']$/g, '');
-              } catch (e) {
-                return arg;
-              }
-            }) 
-          }, '*');
-        }
-      });
-    }
-    return target[prop];
-  }
-});
-</script></body>
+</body>
 </html>
