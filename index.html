@@ -58,12 +58,12 @@
 
                         <div class="space-y-1 md:space-y-2">
                             <label for="temperature" class="block font-medium text-gray-700 text-sm md:text-base">主气温度 (°C)：</label>
-                            <input type="number" id="temperature" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="20" required>
+                            <input type="number" id="temperature" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" required>
                         </div>
 
                         <div class="space-y-1 md:space-y-2">
                             <label for="particleDiameter" class="block font-medium text-gray-700 text-sm md:text-base">粉末粒径 (μm)：</label>
-                            <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="50" required>
+                            <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="25" required>
                         </div>
                     </div>
 
@@ -86,7 +86,7 @@
 
                         <div class="space-y-1 md:space-y-2">
                             <label for="safetyCoefficient" class="block font-medium text-gray-700 text-sm md:text-base">安全系数：</label>
-                            <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.5" required>
+                            <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.2" required>
                         </div>
                     </div>
                 </div>
@@ -204,7 +204,7 @@
             let U = 0.6; // 初始猜测值
             const Dd = pipeDiameter * 1e-3; // 管道直径 m
             const tolerance = 1e-6;
-            const maxIterations = 100;
+            const maxIterations = 5000;
             let iteration = 0;
 
             while (iteration < maxIterations) {
