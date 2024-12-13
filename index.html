@@ -51,11 +51,6 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="temperature" class="block font-medium text-gray-700 text-sm md:text-base">主气温度 (°C)：</label>
-                    <input type="number" id="temperature" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" step="any">
-                </div>
-
-                <div class="form-item">
                     <label for="particleDiameter" class="block font-medium text-gray-700 text-sm md:text-base">粉末粒径 (μm)：</label>
                     <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="25" step="any">
                 </div>
@@ -71,7 +66,7 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm md:text-base">送粉管内径 (mm)：</label>
+                    <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm md:text-base">送粉管直径 (mm)：</label>
                     <input type="number" id="pipeDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="4" step="any">
                 </div>
 
@@ -145,20 +140,29 @@
             const gasType = parseInt(document.getElementById('gasType').value);
             const pressure = parseFloat(document.getElementById('pressure').value);
             const pressureUnit = document.getElementById('pressureUnit').value;
-            const temperature = parseFloat(document.getElementById('temperature').value);
             const particleDiameter = parseFloat(document.getElementById('particleDiameter').value);
             const particleDensity = parseFloat(document.getElementById('particleDensity').value);
             let volumeFraction = parseFloat(document.getElementById('volumeFraction').value);
             const pipeDiameter = parseFloat(document.getElementById('pipeDiameter').value);
             const safetyCoefficient = parseFloat(document.getElementById('safetyCoefficient').value);
 
+            // 固定主气温度为 20℃
+            const temperature = 20;
+            const temperatureK = temperature + 273.15;
+
+            // 验证粉末体积分数
+            if (volumeFraction > 2) {
+                alert("本程序只适用于稀相运输（粉末体积分数＜2%）。");
+                return;
+            }
+
             // 验证主气压力
             if (pressure <= 0) {
                 alert("主气压力必须大于0。");
                 return;
             }
-            if (pressureUnit === 'mpa' && pressure > 10) {
-                alert("当单位为MPa时，主气压力最大不得超过10 MPa。");
+            if (pressureUnit === 'mpa' && pressure > 15) {
+                alert("当单位为MPa时，主气压力最大不得超过15 MPa。");
                 return;
             }
 
@@ -172,9 +176,6 @@
             } else {
                 pressurePa = pressure * 1000000; // MPa 转 Pa
             }
-
-            // 转换温度到 K
-            const temperatureK = temperature + 273.15;
 
             // 标准状态参数
             const standardPressure = 101325; // Pa
