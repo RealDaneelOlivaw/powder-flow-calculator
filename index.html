@@ -34,25 +34,25 @@
     </style>
 </head>
 <body>
-    <div class="container mx-auto px-4 py-4 md:p-6 max-w-lg"> <!-- 调整最大宽度 -->
-        <div class="bg-white rounded-xl shadow-md p-4 md:p-8 mb-6"> <!-- 去掉阴影部分 -->
-            <h1 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>
+    <div class="container mx-auto px-4 py-4 max-w-full"> <!-- 调整最大宽度 -->
+        <div class="bg-white rounded-xl shadow-md p-4 mb-6"> <!-- 去掉阴影部分 -->
+            <h1 class="text-2xl font-bold mb-4 text-gray-800 text-center">最小送粉气流量计算器</h1>
             
-            <form id="calculator-form" class="grid form-grid gap-4 md:gap-6">
+            <form id="calculator-form" class="grid form-grid gap-4">
                 <!-- 左列 -->
                 <div class="form-item">
-                    <label for="gasType" class="block font-medium text-gray-700 text-sm md:text-base">载气类型：</label>
-                    <select id="gasType" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
+                    <label for="gasType" class="block font-medium text-gray-700 text-sm">载气类型：</label>
+                    <select id="gasType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm">
                         <option value="1">氮气 (N₂)</option>
                         <option value="2">氦气 (He)</option>
                     </select>
                 </div>
 
                 <div class="form-item">
-                    <label for="pressure" class="block font-medium text-gray-700 text-sm md:text-base">主气压力：</label>
+                    <label for="pressure" class="block font-medium text-gray-700 text-sm">主气压力：</label>
                     <div class="flex space-x-2">
-                        <input type="number" id="pressure" class="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" required>
-                        <select id="pressureUnit" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
+                        <input type="number" id="pressure" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm" value="500" required>
+                        <select id="pressureUnit" class="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm">
                             <option value="psi">psi</option>
                             <option value="mpa">MPa</option>
                         </select>
@@ -60,38 +60,38 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="temperature" class="block font-medium text-gray-700 text-sm md:text-base">主气温度 (°C)：</label>
-                    <input type="number" id="temperature" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="20" required>
+                    <label for="temperature" class="block font-medium text-gray-700 text-sm">主气温度 (°C)：</label>
+                    <input type="number" id="temperature" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm" value="20" required>
                 </div>
 
                 <div class="form-item">
-                    <label for="particleDiameter" class="block font-medium text-gray-700 text-sm md:text-base">粉末粒径 (μm)：</label>
-                    <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="50" required>
+                    <label for="particleDiameter" class="block font-medium text-gray-700 text-sm">粉末粒径 (μm)：</label>
+                    <input type="number" id="particleDiameter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm" value="50" required>
                 </div>
 
                 <div class="form-item">
-                    <label for="particleDensity" class="block font-medium text-gray-700 text-sm md:text-base">粉末密度 (kg/m³)：</label>
-                    <input type="number" id="particleDensity" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="2700" required>
+                    <label for="particleDensity" class="block font-medium text-gray-700 text-sm">粉末密度 (kg/m³)：</label>
+                    <input type="number" id="particleDensity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm" value="2700" required>
                 </div>
 
                 <div class="form-item">
-                    <label for="volumeFraction" class="block font-medium text-gray-700 text-sm md:text-base">粉末体积分数（%）：</label>
-                    <input type="number" id="volumeFraction" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="0.5" required>
+                    <label for="volumeFraction" class="block font-medium text-gray-700 text-sm">粉末体积分数（%）：</label>
+                    <input type="number" id="volumeFraction" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm" value="0.5" required>
                 </div>
 
                 <div class="form-item">
-                    <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm md:text-base">送粉管直径 (mm)：</label>
-                    <input type="number" id="pipeDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="4" required>
+                    <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm">送粉管直径 (mm)：</label>
+                    <input type="number" id="pipeDiameter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm" value="4" required>
                 </div>
 
                 <div class="form-item">
-                    <label for="safetyCoefficient" class="block font-medium text-gray-700 text-sm md:text-base">安全系数：</label>
-                    <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.5" required>
+                    <label for="safetyCoefficient" class="block font-medium text-gray-700 text-sm">安全系数：</label>
+                    <input type="number" id="safetyCoefficient" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm" value="1.5" required>
                 </div>
 
                 <!-- 计算按钮 -->
                 <div class="flex justify-center mt-6">
-                    <button type="submit" class="w-full md:w-auto px-6 md:px-8 py-2.5 md:py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all transform hover:scale-105 text-sm md:text-base">
+                    <button type="submit" class="w-full md:w-auto px-6 py-2.5 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all transform hover:scale-105 text-sm">
                         计算
                     </button>
                 </div>
@@ -99,24 +99,24 @@
         </div>
 
         <!-- 结果显示 -->
-        <div id="results" class="bg-white rounded-xl shadow-md p-4 md:p-8 mb-6 hidden">
-            <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-gray-800">计算结果</h2>
+        <div id="results" class="bg-white rounded-xl shadow-md p-4 mb-6 hidden">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">计算结果</h2>
             <div class="space-y-3">
-                <p class="flex flex-wrap justify-between text-sm md:text-base">
+                <p class="flex flex-wrap justify-between text-sm">
                     <span class="font-medium text-gray-700">最小气体流量：</span>
                     <span class="flex items-center space-x-1">
                         <span id="resultFlowRate" class="text-indigo-600"></span>
                         <span class="text-gray-600">SLM</span>
                     </span>
                 </p>
-                <p class="flex flex-wrap justify-between text-sm md:text-base">
+                <p class="flex flex-wrap justify-between text-sm">
                     <span class="font-medium text-gray-700">粉末质量流量：</span>
                     <span class="flex items-center space-x-1">
                         <span id="resultPowderFlow" class="text-indigo-600"></span>
                         <span class="text-gray-600">g/min</span>
                     </span>
                 </p>
-                <p class="flex flex-wrap justify-between text-sm md:text-base">
+                <p class="flex flex-wrap justify-between text-sm">
                     <span class="font-medium text-gray-700">单位长度压降：</span>
                     <span class="flex items-center space-x-1">
                         <span id="resultPressureDrop" class="text-indigo-600"></span>
@@ -127,7 +127,7 @@
         </div>
 
         <!-- 底部署名 -->
-        <div class="text-center text-gray-600 mt-4 text-sm md:text-base">
+        <div class="text-center text-gray-600 mt-4 text-sm">
             <p>张科杰  超卓航科广州研究院</p>
         </div>
     </div>
