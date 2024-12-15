@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="pressure" class="block font-medium text-gray-700 text-sm md:text-base">主气压力：</label>
+                    <label for="pressure" class="block font-medium text-gray-700 text-sm md:text-base">送粉气压力：</label>
                     <div class="flex space-x-2">
                         <input type="number" id="pressure" class="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" step="any" required>
                         <select id="pressureUnit" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
@@ -161,8 +161,8 @@
                 alert("主气压力必须大于0。");
                 return;
             }
-            if (pressureUnit === 'mpa' && pressure > 15) {
-                alert("当单位为MPa时，主气压力最大不得超过15 MPa。");
+            if (pressureUnit === 'mpa' && pressure > 10) {
+                alert("当单位为MPa时，主气压力最大不得超过10 MPa。");
                 return;
             }
 
