@@ -1,261 +1,121 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>最小送粉气流量计算器</title>
-    <!-- 引入 Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入思源黑体字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-        }
-        * {
-            box-sizing: border-box;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #6366f1;
-            ring-color: #6366f1;
-        }
-        .transition-all {
-            transition: all 0.3s ease;
-        }
-    </style>
-</head>
-<body>
-    <div id="container" class="mx-auto px-4 py-4 md:p-6" style="max-width: 100vw;">
-        <div class="bg-white rounded-lg p-4 md:p-6 mb-6">
-            <h1 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>
+<!DOCTYPE html>  
+<html lang="zh-CN">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>最小送粉气流量计算器</title>  
+    <!-- 引入 Tailwind CSS -->  
+    <script src="https://cdn.tailwindcss.com"></script>  
+    <!-- 引入思源黑体字体 -->  
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">  
+    <style>  
+        body {  
+            font-family: 'Noto Sans SC', sans-serif;  
+        }  
+        * {  
+            box-sizing: border-box;  
+        }  
+        input:focus, select:focus {  
+            outline: none;  
+            border-color: #6366f1;  
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);  
+        }  
+        .transition-all {  
+            transition: all 0.3s ease;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div id="container" class="mx-auto px-4 py-4 md:p-6 w-full max-w-screen-lg pb-8">  
+        <div class="bg-white rounded-lg p-4 md:p-6 mb-6">  
+            <h1 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800 text-center">最小送粉气流量计算器</h1>  
             
-            <form id="calculator-form" class="grid form-grid gap-4 md:gap-6">
-                <div class="form-item">
-                    <label for="gasType" class="block font-medium text-gray-700 text-sm md:text-base">载气类型：</label>
-                    <select id="gasType" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
-                        <option value="1">氮气 (N₂)</option>
-                        <option value="2">氦气 (He)</option>
-                    </select>
-                </div>
+            <form id="calculator-form" class="grid form-grid gap-4 md:gap-6">  
+                <div class="form-item">  
+                    <label for="gasType" class="block font-medium text-gray-700 text-sm md:text-base">载气类型：</label>  
+                    <select id="gasType" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">  
+                        <option value="1">氮气 (N₂)</option>  
+                        <option value="2">氦气 (He)</option>  
+                    </select>  
+                </div>  
 
-                <div class="form-item">
-                    <label for="pressure" class="block font-medium text-gray-700 text-sm md:text-base">送粉气压力：</label>
-                    <div class="flex space-x-2">
-                        <input type="number" id="pressure" class="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" step="any" required>
-                        <select id="pressureUnit" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">
-                            <option value="psi">psi</option>
-                            <option value="mpa">MPa</option>
-                        </select>
-                    </div>
-                </div>
+                <div class="form-item">  
+                    <label for="pressure" class="block font-medium text-gray-700 text-sm md:text-base">送粉气压力：</label>  
+                    <div class="flex space-x-2">  
+                        <input type="number" id="pressure" class="flex-1 px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="500" step="any" required>  
+                        <select id="pressureUnit" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all bg-gray-50 text-sm md:text-base">  
+                            <option value="psi">psi</option>  
+                            <option value="mpa">MPa</option>  
+                        </select>  
+                    </div>  
+                </div>  
 
-                <div class="form-item">
-                    <label for="particleDiameter" class="block font-medium text-gray-700 text-sm md:text-base">粉末粒径 (μm)：</label>
-                    <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="25" step="any">
-                </div>
+                <div class="form-item">  
+                    <label for="particleDiameter" class="block font-medium text-gray-700 text-sm md:text-base">粉末粒径 (μm)：</label>  
+                    <input type="number" id="particleDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="25" step="any">  
+                </div>  
 
-                <div class="form-item">
-                    <label for="particleDensity" class="block font-medium text-gray-700 text-sm md:text-base">粉末密度 (kg/m³)：</label>
-                    <input type="number" id="particleDensity" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="2700" step="any">
-                </div>
+                <div class="form-item">  
+                    <label for="particleDensity" class="block font-medium text-gray-700 text-sm md:text-base">粉末密度 (kg/m³)：</label>  
+                    <input type="number" id="particleDensity" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="2700" step="any">  
+                </div>  
 
-                <div class="form-item">
-                    <label for="volumeFraction" class="block font-medium text-gray-700 text-sm md:text-base">粉末体积分数（%）：</label>
-                    <input type="number" id="volumeFraction" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="0.5" step="any">
-                </div>
+                <div class="form-item">  
+                    <label for="volumeFraction" class="block font-medium text-gray-700 text-sm md:text-base">粉末体积分数（%）：</label>  
+                    <input type="number" id="volumeFraction" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="0.5" step="any">  
+                </div>  
 
-                <div class="form-item">
-                    <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm md:text-base">送粉管内径 (mm)：</label>
-                    <input type="number" id="pipeDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="4" step="any">
-                </div>
+                <div class="form-item">  
+                    <label for="pipeDiameter" class="block font-medium text-gray-700 text-sm md:text-base">送粉管内径 (mm)：</label>  
+                    <input type="number" id="pipeDiameter" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="4" step="any">  
+                </div>  
 
-                <div class="form-item">
-                    <label for="safetyCoefficient" class="block font-medium text-gray-700 text-sm md:text-base">安全系数：</label>
-                    <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.5" step="any">
-                </div>
+                <div class="form-item">  
+                    <label for="safetyCoefficient" class="block font-medium text-gray-700 text-sm md:text-base">安全系数：</label>  
+                    <input type="number" id="safetyCoefficient" class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base" value="1.5" step="any">  
+                </div>  
 
-                <!-- 计算按钮 -->
-                <div class="flex justify-center mt-6">
-                    <button type="submit" class="w-full md:w-auto px-6 md:px-8 py-2.5 md:py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all transform hover:scale-105 text-sm md:text-base">
-                        计算
-                    </button>
-                </div>
-            </form>
-        </div>
+                <!-- 计算按钮 -->  
+                <div class="flex justify-center mt-6">  
+                    <button type="submit" class="w-full md:w-auto px-6 md:px-8 py-2.5 md:py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all transform hover:scale-105 text-sm md:text-base">  
+                        计算  
+                    </button>  
+                </div>  
+            </form>  
+        </div>  
 
-        <!-- 结果显示 -->
-        <div id="results" class="bg-white rounded-lg p-4 md:p-6 mb-6 hidden">
-            <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-gray-800">计算结果</h2>
-            <div class="space-y-3">
-                <p class="flex flex-wrap justify-between text-sm md:text-base">
-                    <span class="font-medium text-gray-700">最小气体流量：</span>
-                    <span class="flex items-center space-x-1">
-                        <span id="resultFlowRate" class="text-indigo-600"></span>
-                        <span class="text-gray-600">SLM</span>
-                    </span>
-                </p>
-                <p class="flex flex-wrap justify-between text-sm md:text-base">
-                    <span class="font-medium text-gray-700">粉末质量流量：</span>
-                    <span class="flex items-center space-x-1">
-                        <span id="resultPowderFlow" class="text-indigo-600"></span>
-                        <span class="text-gray-600">g/min</span>
-                    </span>
-                </p>
-                <p class="flex flex-wrap justify-between text-sm md:text-base">
-                    <span class="font-medium text-gray-700">单位长度压降：</span>
-                    <span class="flex items-center space-x-1">
-                        <span id="resultPressureDrop" class="text-indigo-600"></span>
-                        <span class="text-gray-600">Pa/m</span>
-                    </span>
-                </p>
-            </div>
-        </div>
+        <!-- 结果显示 -->  
+        <div id="results" class="bg-white rounded-lg p-4 md:p-6 mb-6 hidden">  
+            <h2 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-gray-800">计算结果</h2>  
+            <div class="space-y-3">  
+                <p class="flex flex-wrap justify-between text-sm md:text-base">  
+                    <span class="font-medium text-gray-700">最小气体流量：</span>  
+                    <span class="flex items-center space-x-1">  
+                        <span id="resultFlowRate" class="text-indigo-600"></span>  
+                        <span class="text-gray-600">SLM</span>  
+                    </span>  
+                </p>  
+                <p class="flex flex-wrap justify-between text-sm md:text-base">  
+                    <span class="font-medium text-gray-700">粉末质量流量：</span>  
+                    <span class="flex items-center space-x-1">  
+                        <span id="resultPowderFlow" class="text-indigo-600"></span>  
+                        <span class="text-gray-600">g/min</span>  
+                    </span>  
+                </p>  
+                <p class="flex flex-wrap justify-between text-sm md:text-base">  
+                    <span class="font-medium text-gray-700">单位长度压降：</span>  
+                    <span class="flex items-center space-x-1">  
+                        <span id="resultPressureDrop" class="text-indigo-600"></span>  
+                        <span class="text-gray-600">Pa/m</span>  
+                    </span>  
+                </p>  
+            </div>  
+        </div>  
 
-        <!-- 底部署名 -->
-        <div class="text-center text-gray-600 mt-4 text-sm md:text-base">
-            <p>张科杰 —— 超卓航科广州研究院</p>
-        </div>
-    </div>
-
-    <script>
-        // 获取屏幕宽度并设置容器宽度
-        function adjustContainerWidth() {
-            const container = document.getElementById('container');
-            const screenWidth = window.innerWidth;
-            container.style.width = `${screenWidth}px`;
-        }
-
-        // 调整容器宽度
-        adjustContainerWidth();
-
-        // 监听窗口大小变化
-        window.addEventListener('resize', adjustContainerWidth);
-
-        // 监听表单提交事件
-        document.getElementById('calculator-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // 获取输入值
-            const gasType = parseInt(document.getElementById('gasType').value);
-            const pressure = parseFloat(document.getElementById('pressure').value);
-            const pressureUnit = document.getElementById('pressureUnit').value;
-            const particleDiameter = parseFloat(document.getElementById('particleDiameter').value);
-            const particleDensity = parseFloat(document.getElementById('particleDensity').value);
-            let volumeFraction = parseFloat(document.getElementById('volumeFraction').value);
-            const pipeDiameter = parseFloat(document.getElementById('pipeDiameter').value);
-            const safetyCoefficient = parseFloat(document.getElementById('safetyCoefficient').value);
-
-            // 固定主气温度为 20℃
-            const temperature = 20;
-            const temperatureK = temperature + 273.15;
-
-            // 验证粉末体积分数
-            if (volumeFraction > 2) {
-                alert("本程序只适用于稀相运输（粉末体积分数＜2%）。");
-                return;
-            }
-
-            // 验证主气压力
-            if (pressure <= 0) {
-                alert("主气压力必须大于0。");
-                return;
-            }
-            if (pressureUnit === 'mpa' && pressure > 10) {
-                alert("当单位为MPa时，主气压力最大不得超过10 MPa。");
-                return;
-            }
-
-            // 将粉末体积分数从百分数转换为小数
-            volumeFraction = volumeFraction / 100;
-
-            // 转换压力单位到 Pa
-            let pressurePa;
-            if (pressureUnit === 'psi') {
-                pressurePa = pressure * 6894.76; // psi 转 Pa
-            } else {
-                pressurePa = pressure * 1000000; // MPa 转 Pa
-            }
-
-            // 标准状态参数
-            const standardPressure = 101325; // Pa
-            const standardTemperature = 273.15; // K
-
-            // 粉末粒径转换为米
-            const dp = particleDiameter * 1e-6; // m
-
-            // 计算气体在实际状态下的密度 rho
-            let rhoStandard, mu;
-            if (gasType === 1) {
-                rhoStandard = 1.25; // kg/m³ 氮气标准密度
-                mu = 1.8e-5; // Pa·s 氮气粘度
-            } else {
-                rhoStandard = 0.1664; // kg/m³ 氦气标准密度
-                mu = 1.96e-5; // Pa·s 氦气粘度
-            }
-            const rho = (pressurePa * standardTemperature) / (standardPressure * temperatureK) * rhoStandard; // 实际密度
-
-            // 计算动力粘度 nu
-            const nu = mu / rho; // m²/s
-
-            // 重力加速度
-            const g = 9.81; // m/s²
-
-            // 计算 U_pt
-            const Upt = (Math.pow(dp, 2) * (particleDensity - rho) * g) / (18 * rho * nu);
-
-            // 计算 U_f0
-            const exponent = 2.71;
-            const root = 1 / 3.71;
-            const Uf0 = Math.pow(100 * Upt * Math.pow(nu / dp, exponent), root);
-
-            // 计算 U_f
-            const term = Math.pow(Upt / Uf0, 1/3) * Math.pow(volumeFraction, 0.5);
-            const Uf = Uf0 * (1 + 2.8 * term);
-
-            // 迭代求解 U
-            let U = 0.6; // 初始猜测值
-            const Dd = pipeDiameter * 1e-3; // 管道直径 m
-            const tolerance = 1e-6;
-            const maxIterations = 8000;
-            let iteration = 0;
-
-            while (iteration < maxIterations) {
-                const newU = Uf * (5 * Math.log10(Dd * U / nu) - 3.90);
-                if (Math.abs(newU - U) < tolerance) {
-                    U = newU;
-                    break;
-                }
-                U = newU;
-                iteration++;
-            }
-            if (iteration === maxIterations) {
-                alert("迭代未能收敛，请检查输入参数。");
-                return;
-            }
-
-            // 计算实际流量 Q 和标准流量 Q_s
-            const pipeArea = Math.PI * Math.pow(Dd / 2, 2); // 管道截面积 m²
-            const Q = U * pipeArea; // 实际流量 m³/s
-            const Qs = Q * (pressurePa / standardPressure) * (standardTemperature / temperatureK); // 标准流量 m³/s
-
-            // 转换为 SLM，并乘以安全系数
-            const Qs_slm = Qs * 1000 * 60 * safetyCoefficient; // SLM
-
-            // 计算粉末质量流量
-            const powderFlow = Q * volumeFraction * particleDensity * 1000 * 60; // g/min
-
-            // 计算单位长度压降
-            const pressureDrop = (volumeFraction * particleDensity + (1 - volumeFraction) * rho) * (4 * Math.pow(Uf, 2) / Dd); // Pa/m
-
-            // 显示结果
-            document.getElementById('resultFlowRate').textContent = Qs_slm.toFixed(2);
-            document.getElementById('resultPowderFlow').textContent = powderFlow.toFixed(2);
-            document.getElementById('resultPressureDrop').textContent = pressureDrop.toFixed(2);
-
-            // 显示结果区域
-            document.getElementById('results').classList.remove('hidden');
-        });
-    </script>
-</body>
+        <!-- 底部署名 -->  
+        <div class="text-center text-gray-600 mt-2 text-sm md:text-base">  
+            <p>张科杰 —— 超卓航科广州研究院</p>  
+        </div>  
+    </div>  
+</body>  
 </html>
