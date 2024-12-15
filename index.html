@@ -117,5 +117,131 @@
             <p>张科杰 —— 超卓航科广州研究院</p>  
         </div>  
     </div>  
+
+    <script>  
+        // 计算逻辑部分（保持原样）  
+        document.getElementById('calculator-form').addEventListener('submit', function(e) {  
+            e.preventDefault();  
+            // 获取输入值  
+            const gasType = parseInt(document.getElementById('gasType').value);  
+            const pressure = parseFloat(document.getElementById('pressure').value);  
+            const pressureUnit = document.getElementById('pressureUnit').value;  
+            const particleDiameter = parseFloat(document.getElementById('particleDiameter').value);  
+            const particleDensity = parseFloat(document.getElementById('particleDensity').value);  
+            let volumeFraction = parseFloat(document.getElementById('volumeFraction').value);  
+            const pipeDiameter = parseFloat(document.getElementById('pipeDiameter').value);  
+            const safetyCoefficient = parseFloat(document.getElementById('safetyCoefficient').value);  
+
+            // 固定主气温度为 20℃  
+            const temperature = 20;  
+            const temperatureK = temperature + 273.15;  
+
+            // 验证粉末体积分数  
+            if (volumeFraction > 2) {  
+                alert("本程序只适用于稀相运输（粉末体积分数＜2%）。");  
+                return;  
+            }  
+
+            // 验证主气压力  
+            if (pressure <= 0) {  
+                alert("主气压力必须大于0。");  
+                return;  
+            }  
+            if (pressureUnit === 'mpa' && pressure > 10) {  
+                alert("当单位为MPa时，主气压力最大不得超过10 MPa。");  
+                return;  
+            }  
+
+            // 将粉末体积分数从百分数转换为小数  
+            volumeFraction = volumeFraction / 100;  
+
+            // 转换压力单位到 Pa  
+            let pressurePa;  
+            if (pressureUnit === 'psi') {  
+                pressurePa = pressure * 6894.76; // psi 转 Pa  
+            } else {  
+                pressurePa = pressure * 1000000; // MPa 转 Pa  
+            }  
+
+            // 标准状态参数  
+            const standardPressure = 101325; // Pa  
+            const standardTemperature = 273.15; // K  
+
+            // 粉末粒径转换为米  
+            const dp = particleDiameter * 1e-6; // m  
+
+            // 计算气体在实际状态下的密度 rho  
+            let rhoStandard, mu;  
+            if (gasType === 1) {  
+                rhoStandard = 1.25; // kg/m³ 氮气标准密度  
+                mu = 1.8e-5; // Pa·s 氮气粘度  
+            } else {  
+                rhoStandard = 0.1664; // kg/m³ 氦气标准密度  
+                mu = 1.96e-5; // Pa·s 氦气粘度  
+            }  
+            const rho = (pressurePa * standardTemperature) / (standardPressure * temperatureK) * rhoStandard; // 实际密度  
+
+            // 计算动力粘度 nu  
+            const nu = mu / rho; // m²/s  
+
+            // 重力加速度  
+            const g = 9.81; // m/s²  
+
+            // 计算 U_pt  
+            const Upt = (Math.pow(dp, 2) * (particleDensity - rho) * g) / (18 * rho * nu);  
+
+            // 计算 U_f0  
+            const exponent = 2.71;  
+            const root = 1 / 3.71;  
+            const Uf0 = Math.pow(100 * Upt * Math.pow(nu / dp, exponent), root);  
+
+            // 计算 U_f  
+            const term = Math.pow(Upt / Uf0, 1/3) * Math.pow(volumeFraction, 0.5);  
+            const Uf = Uf0 * (1 + 2.8 * term);  
+
+            // 迭代求解 U  
+            let U = 0.6; // 初始猜测值  
+            const Dd = pipeDiameter * 1e-3; // 管道直径 m  
+            const tolerance = 1e-6;  
+            const maxIterations = 8000;  
+            let iteration = 0;  
+
+            while (iteration < maxIterations) {  
+                const newU = Uf * (5 * Math.log10(Dd * U / nu) - 3.90);  
+                if (Math.abs(newU - U) < tolerance) {  
+                    U = newU;  
+                    break;  
+                }  
+                U = newU;  
+                iteration++;  
+            }  
+            if (iteration === maxIterations) {  
+                alert("迭代未能收敛，请检查输入参数。");  
+                return;  
+            }  
+
+            // 计算实际流量 Q 和标准流量 Q_s  
+            const pipeArea = Math.PI * Math.pow(Dd / 2, 2); // 管道截面积 m²  
+            const Q = U * pipeArea; // 实际流量 m³/s  
+            const Qs = Q * (pressurePa / standardPressure) * (standardTemperature / temperatureK); // 标准流量 m³/s  
+
+            // 转换为 SLM，并乘以安全系数  
+            const Qs_slm = Qs * 1000 * 60 * safetyCoefficient; // SLM  
+
+            // 计算粉末质量流量  
+            const powderFlow = Q * volumeFraction * particleDensity * 1000 * 60; // g/min  
+
+            // 计算单位长度压降  
+            const pressureDrop = (volumeFraction * particleDensity + (1 - volumeFraction) * rho) * (4 * Math.pow(Uf, 2) / Dd); // Pa/m  
+
+            // 显示结果  
+            document.getElementById('resultFlowRate').textContent = Qs_slm.toFixed(2);  
+            document.getElementById('resultPowderFlow').textContent = powderFlow.toFixed(2);  
+            document.getElementById('resultPressureDrop').textContent = pressureDrop.toFixed(2);  
+
+            // 显示结果区域  
+            document.getElementById('results').classList.remove('hidden');  
+        });  
+    </script>  
 </body>  
 </html>
